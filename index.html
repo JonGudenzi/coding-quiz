@@ -9,25 +9,28 @@
 <body>
     
 
-<div class="box" hidden>
+<div id="box" hidden>
     <div id="question-box">
         <div id="question">Question</div>
             <div id="choices">
-                <button class="button">answer 1</button>
-                <button class="button">answer 2</button>
-                <button class="button">answer 3</button>
-                <button class="button">answer 4</button>
+                <div class="choice" id="A" onclick="checkAnswer('A')"></div>
+                <div class="choice" id="B" onclick="checkAnswer('B')"></div>
+                <div class="choice" id="C" onclick="checkAnswer('C')"></div>
             </div>
+
             <div id="timer">timer</div>
             <button id="startBtn">Click here to start the quiz</button>
+        <div id="highScores">
+        <H1>High Scores</H1>
+        <textarea name="highScore" id="userName" cols="30" rows="10"></textarea>
+        </div>
     </div>
     
 </div>
 
 
-
-
-
 <script src="./script.js"></script>
 </body>
 </html>
+
+
