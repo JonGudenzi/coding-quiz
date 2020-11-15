@@ -13,9 +13,11 @@
 
     <div id="highScores" style="display: none;">
         <H1>High Scores</H1>
-        <textarea name="highScore" id="userName" cols="30" rows="10"></textarea>
-        </div>
-        
+        <textarea name="highScore" id="userName" cols="30" rows="10"></textarea>      
+        <button id="saveScore" onclick="saveUserScore(); readStatus();">Save Score</button>
+        <textarea id="write"></textarea>
+    </div>
+
     <button id="start">Click here to start</button>
     <div id="question-box">
         <div id="question">Question</div>
@@ -29,10 +31,6 @@
                 <div id="counter"></div>
             </div>
             <div id="progress"></div>
-        <!-- <div id="highScores" style="display: none;">
-        <H1>High Scores</H1>
-        <textarea name="highScore" id="userName" cols="30" rows="10"></textarea>
-        </div> -->
     </div>
     
 </div>

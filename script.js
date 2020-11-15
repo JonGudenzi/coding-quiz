@@ -8,9 +8,8 @@ var userNameEl = document.querySelector("#userName");
 var choiceA = document.querySelector("#A")
 var choiceB = document.querySelector("#B")
 var choiceC = document.querySelector("#C")
-var progress = document.getElementById("progress");
 var question = document.getElementById("question");
-var questionBox = document.getElementById("#question-Box")
+var questionBox = document.getElementById("question-box")
 var score = 0;
 
 
@@ -23,16 +22,16 @@ var currentQuestion = [
         choiceC : "function",
         correct : "A"
     },{
-        question : "next question?",
-        choiceA : "Wrong",
-        choiceB : "right",
-        choiceC : "Wrong",
+        question : "When was JavaScript created?",
+        choiceA : "1970",
+        choiceB : "1995",
+        choiceC : "2003",
         correct : "B"
     },{
-        question : "What is the answer to this third question?",
-        choiceA : "Wrong",
-        choiceB : "Wrong",
-        choiceC : "right",
+        question : "How do you add a comment in JavaScript?",
+        choiceA : "<!--comment-->",
+        choiceB : "(comment)",
+        choiceC : "//comment",
         correct : "C"
     }
 ];
@@ -43,10 +42,10 @@ var count = 10;
 var questionTime = 10; 
 
 var TIMER;
-var score = 0;
 
 // question
 function renderQuestion(){
+    
     var q = currentQuestion[runningQuestion];
     
     question.innerHTML = "<p>"+ q.question +"</p>";
@@ -56,34 +55,32 @@ function renderQuestion(){
 }
 
 
-start.addEventListener("click",startQuiz);
+startBtn.addEventListener("click",startQuiz);
 
 
 // start quiz
 function startQuiz(){
+    timerDiv.style.display = "block";
+    choiceDiv.style.display = "flex";
+    question.style.display = "block";
+    highScores.style.display = "none";
     start.style.display = "none";
     renderQuestion();
     quizArea.style.display = "block";
-    renderProgress();
+    questionBox.style.display = "block";
     renderCounter();
     TIMER = setInterval(renderCounter,1000); 
-}
-
-// render progress
-function renderProgress(){
-    for(let qIndex = 0; qIndex <= lastQuestion; qIndex++){
-        progress.innerHTML += "<div class='prog' id="+ qIndex +"></div>";
-    }
 }
 
 // timer
 
 function renderCounter(){
+   
     if(count <= questionTime && count >= 0){
         counter.innerHTML = count;
-        count--;
+        count--
     }else{
-        count = 0;
+        count = 10;
         answerIsWrong();
         if(runningQuestion < lastQuestion){
             runningQuestion++;
@@ -92,22 +89,24 @@ function renderCounter(){
         }else{
             console.log("renderCounter")
             clearInterval(TIMER);
-            scoreRender();
         }
     }
 }
 
 // check to see if answer is right or wrong
-
 function checkAnswer(answer){
-    if( answer == questions[runningQuestion].correct){
+    if( answer == currentQuestion[runningQuestion].correct){
         score++;
+        answerIsCorrect();
+        
+
     }else{
         count --;
         answerIsWrong();
         
     }
     count = 10;
+    debugger;
     if(runningQuestion < lastQuestion){
         runningQuestion++;
         renderQuestion();
@@ -117,28 +116,63 @@ function checkAnswer(answer){
     }
 }
 
-
 //  correct
 function answerIsCorrect(){
     document.getElementById(runningQuestion);
+   
 }
 
 //  Wrong
 function answerIsWrong(){
     document.getElementById(runningQuestion);
+    
 }
 
 // compute score
 function scoreRender(){
     highScores.style.display = "block";
-    start.style.display = "block";
+    start.style.display = "none";
     question.style.display = "none";
+    questionBox.style.display = "none";
     timerDiv.style.display = "none";
-    choiceDiv.style.display = "none";
-    
-    var scorePerCent = Math.round(100 * score/questions.length);
-    
-    // highScores.innerHTML = "<img src="+ img +">";
-    highScores.innerHTML += "<p>"+ scorePerCent +"%</p>";
+    choiceDiv.style.display = "none";    
 }
 
+function saveUserScore() {
+    var stores = Array();
+    var user = document.getElementById('userName');
+
+    var saveUserScore = user.value;
+    if ((saveUserScore == null) || (saveUserScore == "")) {
+        document.getElementById('write').innerHTML = "nothing to store.";
+    } else {
+        //push that value to the array
+        stores.push(saveUserScore);
+        //clear the input field for visual 
+        user.value = "";
+        //print value in local storage
+        window.localStorage.setItem("database", stores.join(" "));
+        //confirm write
+        document.getElementById('write').innerHTML = "data stored.";
+        
+    }
+    
+       let retrievedObject = JSON.parse(window.localStorage.getItem('results'));
+
+        if(!retrievedObject ){
+        alert('Empty, initializing');
+        retrievedObject  = [];
+        }
+}
+
+function readStatus() {
+    
+    var scorePerCent = Math.round(100 * score/currentQuestion.length);
+    
+    if (window.localStorage.getItem("database") == null) {
+        document.getElementById('write').innerHTML = "nothing stored.";
+    } else {
+        document.getElementById('write').innerHTML = window.localStorage.getItem("database") + ' ' + scorePerCent + '%'
+
+    }
+}
