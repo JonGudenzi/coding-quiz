@@ -29,7 +29,7 @@ var currentQuestion = [
         correct : "B"
     },{
         question : "How do you add a comment in JavaScript?",
-        choiceA : "<!--comment-->",
+        choiceA : "!comment!",
         choiceB : "(comment)",
         choiceC : "//comment",
         correct : "C"
@@ -101,12 +101,11 @@ function checkAnswer(answer){
         
 
     }else{
-        count --;
         answerIsWrong();
         
     }
     count = 10;
-    debugger;
+    
     if(runningQuestion < lastQuestion){
         runningQuestion++;
         renderQuestion();
@@ -125,10 +124,10 @@ function answerIsCorrect(){
 //  Wrong
 function answerIsWrong(){
     document.getElementById(runningQuestion);
-    
+    count --;
 }
 
-// compute score
+// end quiz
 function scoreRender(){
     highScores.style.display = "block";
     start.style.display = "none";
