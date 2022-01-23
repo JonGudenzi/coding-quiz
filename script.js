@@ -13,34 +13,10 @@ var questionBox = document.getElementById("question-box")
 var score = 0;
 
 
-
-var currentQuestion = [
-    {
-        question : "Which one of these is a JavaScript data type?",
-        choiceA : "string",
-        choiceB : "method",
-        choiceC : "function",
-        correct : "A"
-    },{
-        question : "When was JavaScript created?",
-        choiceA : "1970",
-        choiceB : "1995",
-        choiceC : "2003",
-        correct : "B"
-    },{
-        question : "How do you add a comment in JavaScript?",
-        choiceA : "!comment!",
-        choiceB : "(comment)",
-        choiceC : "//comment",
-        correct : "C"
-    }
-];
-
 var lastQuestion = currentQuestion.length - 1;
 var runningQuestion = 0;
-var count = 10;
-var questionTime = 10; 
-
+var count = 25;
+ 
 var TIMER;
 
 // question
@@ -76,11 +52,11 @@ function startQuiz(){
 
 function renderCounter(){
    
-    if(count <= questionTime && count >= 0){
+    if( count >= 0){
         counter.innerHTML = count;
         count--
     }else{
-        count = 10;
+        count -=5;
         answerIsWrong();
         if(runningQuestion < lastQuestion){
             runningQuestion++;
@@ -102,9 +78,8 @@ function checkAnswer(answer){
 
     }else{
         answerIsWrong();
-        
     }
-    count = 10;
+    
     
     if(runningQuestion < lastQuestion){
         runningQuestion++;
@@ -124,8 +99,9 @@ function answerIsCorrect(){
 //  Wrong
 function answerIsWrong(){
     document.getElementById(runningQuestion);
-    count --;
+    count -=5;
 }
+
 
 // end quiz
 function scoreRender(){
