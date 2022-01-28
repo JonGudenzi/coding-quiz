@@ -12,22 +12,25 @@ var question = document.getElementById("question");
 var questionBox = document.getElementById("question-box")
 var score = 0;
 
-
-var lastQuestion = currentQuestion.length - 1;
+var stores = Array();
+var user = document.getElementById('userName');
+var scorePerCent = Math.round(100 * score/currentQuestion.length);
+var lastQuestion = currentQuestion.length -1;
 var runningQuestion = 0;
-var count = 25;
- 
+var count = 8;
+
 var TIMER;
 
 // question
 function renderQuestion(){
-    
     var q = currentQuestion[runningQuestion];
     
     question.innerHTML = "<p>"+ q.question +"</p>";
     choiceA.innerHTML = q.choiceA;
     choiceB.innerHTML = q.choiceB;
     choiceC.innerHTML = q.choiceC;
+
+
 }
 
 
@@ -48,7 +51,7 @@ function startQuiz(){
     TIMER = setInterval(renderCounter,1000); 
 }
 
-// timer
+// timer and ending of quiz if timer runs out
 
 function renderCounter(){
    
@@ -56,15 +59,21 @@ function renderCounter(){
         counter.innerHTML = count;
         count--
     }else{
-        count -=5;
+        count <= 0;
         answerIsWrong();
+        scoreRender();
+    
+        
         if(runningQuestion < lastQuestion){
             runningQuestion++;
             renderQuestion();
            
         }else{
+            
+            
             console.log("renderCounter")
             clearInterval(TIMER);
+
         }
     }
 }
@@ -110,44 +119,46 @@ function scoreRender(){
     question.style.display = "none";
     questionBox.style.display = "none";
     timerDiv.style.display = "none";
-    choiceDiv.style.display = "none";    
+    choiceDiv.style.display = "none";   
+    
 }
 
 function saveUserScore() {
-    var stores = Array();
-    var user = document.getElementById('userName');
+    
+    // var user = document.getElementById('userName');
+    // var scorePerCent = Math.round(100 * score/currentQuestion.length);
+    
 
     var saveUserScore = user.value;
     if ((saveUserScore == null) || (saveUserScore == "")) {
         document.getElementById('write').innerHTML = "nothing to store.";
     } else {
+        
         //push that value to the array
-        stores.push(saveUserScore);
+        stores.push(saveUserScore, scorePerCent);
         //clear the input field for visual 
         user.value = "";
         //print value in local storage
-        window.localStorage.setItem("database", stores.join(" "));
-        //confirm write
-        document.getElementById('write').innerHTML = "data stored.";
+        localStorage.setItem("database", stores.join(" "));
         
+        //confirm write
+        document.getElementById('write').innerHTML = stores;
+
+        
+    
     }
     
-       let retrievedObject = JSON.parse(window.localStorage.getItem('results'));
+};
 
-        if(!retrievedObject ){
-        alert('Empty, initializing');
-        retrievedObject  = [];
-        }
-}
-
-function readStatus() {
+// function readStatus() {
     
-    var scorePerCent = Math.round(100 * score/currentQuestion.length);
     
-    if (window.localStorage.getItem("database") == null) {
-        document.getElementById('write').innerHTML = "nothing stored.";
-    } else {
-        document.getElementById('write').innerHTML = window.localStorage.getItem("database") + ' ' + scorePerCent + '%'
+//     var scorePerCent = Math.round(100 * score/currentQuestion.length);
+    
+//     if (window.localStorage.getItem("database") == null) {
+//         document.getElementById('write').innerHTML = "nothing stored.";
+//     } else {
+//         document.getElementById('write').innerHTML = window.localStorage.getItem("database") + ' ' + scorePerCent + '%'
 
-    }
-}
+//     }
+// }

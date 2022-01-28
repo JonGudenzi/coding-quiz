@@ -93,3 +93,15 @@ body{
     border-radius: 25px;
 }
 
+#write{
+    margin-top: 10px;
+    visibility: visible;
+    width: 500px;
+    height: 100px;
+    background-color: black;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    border:black solid 10px;
+    border-radius: 25px;
+}
