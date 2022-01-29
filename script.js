@@ -9,15 +9,19 @@ var choiceA = document.querySelector("#A")
 var choiceB = document.querySelector("#B")
 var choiceC = document.querySelector("#C")
 var question = document.getElementById("question");
+var writeUserNameAndScore = document.getElementById("writeUserNameAndScore");
+
 var questionBox = document.getElementById("question-box")
 var score = 0;
 
-var stores = Array();
+var stores = [];
 var user = document.getElementById('userName');
 var scorePerCent = Math.round(100 * score/currentQuestion.length);
 var lastQuestion = currentQuestion.length -1;
 var runningQuestion = 0;
 var count = 8;
+
+
 
 var TIMER;
 
@@ -63,14 +67,11 @@ function renderCounter(){
         answerIsWrong();
         scoreRender();
     
-        
         if(runningQuestion < lastQuestion){
             runningQuestion++;
             renderQuestion();
            
         }else{
-            
-            
             console.log("renderCounter")
             clearInterval(TIMER);
 
@@ -120,30 +121,59 @@ function scoreRender(){
     questionBox.style.display = "none";
     timerDiv.style.display = "none";
     choiceDiv.style.display = "none";   
+
+    
+    
+
+    for (i=0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+
+        document.getElementById('writeUserNameAndScore').innerHTML = `${value}`;
+    }
     
 }
 
+
 function saveUserScore() {
     
+   writeUserNameAndScore = localStorage.getItem(stores);
+    
+    
     // var user = document.getElementById('userName');
-    // var scorePerCent = Math.round(100 * score/currentQuestion.length);
+    var scorePerCent = Math.round(100 * score/currentQuestion.length);
     
 
     var saveUserScore = user.value;
     if ((saveUserScore == null) || (saveUserScore == "")) {
-        document.getElementById('write').innerHTML = "nothing to store.";
+        document.getElementById('writeUserNameAndScore').innerHTML = "nothing to store.";
     } else {
         
         //push that value to the array
-        stores.push(saveUserScore, scorePerCent);
+        // localStorage.setItem("user", saveUserScore);
+        // localStorage.setItem("score", scorePerCent);
+
+        stores.push(saveUserScore);
+        stores.push(scorePerCent);
+
         //clear the input field for visual 
         user.value = "";
         //print value in local storage
-        localStorage.setItem("database", stores.join(" "));
+        
+          localStorage.setItem("database", JSON.stringify(stores.join(" ")));
+
+        // localStorage.setItem("database", stores.join(" "));
         
         //confirm write
-        document.getElementById('write').innerHTML = stores;
-
+        document.getElementById('writeUserNameAndScore').innerHTML = stores;
+        
+        
+        if (localStorage.getItem("database") == null) {
+            document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
+        } else {
+            document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"))
+    
+        }
         
     
     }
@@ -155,10 +185,10 @@ function saveUserScore() {
     
 //     var scorePerCent = Math.round(100 * score/currentQuestion.length);
     
-//     if (window.localStorage.getItem("database") == null) {
-//         document.getElementById('write').innerHTML = "nothing stored.";
-//     } else {
-//         document.getElementById('write').innerHTML = window.localStorage.getItem("database") + ' ' + scorePerCent + '%'
+    // if (window.localStorage.getItem("database") == null) {
+    //     document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
+    // } else {
+    //     document.getElementById('writeUserNameAndScore').innerHTML = window.localStorage.getItem("database") + ' ' + scorePerCent + '%'
 
-//     }
-// }
+    // }
+
