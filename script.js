@@ -10,19 +10,12 @@ var choiceB = document.querySelector("#B")
 var choiceC = document.querySelector("#C")
 var question = document.getElementById("question");
 var writeUserNameAndScore = document.getElementById("writeUserNameAndScore");
-
 var questionBox = document.getElementById("question-box")
 var score = 0;
-
-var stores = [];
 var user = document.getElementById('userName');
-var scorePerCent = Math.round(100 * score/currentQuestion.length);
 var lastQuestion = currentQuestion.length -1;
 var runningQuestion = 0;
 var count = 8;
-
-
-
 var TIMER;
 
 // question
@@ -37,9 +30,7 @@ function renderQuestion(){
 
 }
 
-
 startBtn.addEventListener("click",startQuiz);
-
 
 // start quiz
 function startQuiz(){
@@ -56,7 +47,6 @@ function startQuiz(){
 }
 
 // timer and ending of quiz if timer runs out
-
 function renderCounter(){
    
     if( count >= 0){
@@ -122,25 +112,28 @@ function scoreRender(){
     timerDiv.style.display = "none";
     choiceDiv.style.display = "none";   
 
-    
-    
+    if (localStorage.getItem("database") == null) {
+        document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
+    } else {
+        document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"));
 
-    for (i=0; i < localStorage.length; i++){
-        var key = localStorage.key(i);
-        var value = localStorage.getItem(key);
-
-        document.getElementById('writeUserNameAndScore').innerHTML = `${value}`;
     }
+    
+
+    // for (i=0; i < localStorage.length; i++){
+    //     var key = localStorage.key(i);
+    //     var value = localStorage.getItem(key);
+
+    //     document.getElementById('writeUserNameAndScore').innerHTML = `${value}`;
+    // }
     
 }
 
 
 function saveUserScore() {
-    
-   writeUserNameAndScore = localStorage.getItem(stores);
-    
-    
-    // var user = document.getElementById('userName');
+var newStores = JSON.parse(localStorage.getItem('database')) || "";
+var stores = [newStores];
+
     var scorePerCent = Math.round(100 * score/currentQuestion.length);
     
 
@@ -149,20 +142,13 @@ function saveUserScore() {
         document.getElementById('writeUserNameAndScore').innerHTML = "nothing to store.";
     } else {
         
-        //push that value to the array
-        // localStorage.setItem("user", saveUserScore);
-        // localStorage.setItem("score", scorePerCent);
-
         stores.push(saveUserScore);
         stores.push(scorePerCent);
 
         //clear the input field for visual 
         user.value = "";
         //print value in local storage
-        
           localStorage.setItem("database", JSON.stringify(stores.join(" ")));
-
-        // localStorage.setItem("database", stores.join(" "));
         
         //confirm write
         document.getElementById('writeUserNameAndScore').innerHTML = stores;
@@ -171,13 +157,9 @@ function saveUserScore() {
         if (localStorage.getItem("database") == null) {
             document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
         } else {
-            document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"))
-    
+            document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"));
         }
-        
-    
     }
-    
 };
 
 // function readStatus() {
