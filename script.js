@@ -118,14 +118,9 @@ function scoreRender(){
         document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"));
 
     }
-    
 
-    // for (i=0; i < localStorage.length; i++){
-    //     var key = localStorage.key(i);
-    //     var value = localStorage.getItem(key);
 
-    //     document.getElementById('writeUserNameAndScore').innerHTML = `${value}`;
-    // }
+
     
 }
 
@@ -134,7 +129,7 @@ function saveUserScore() {
 var newStores = JSON.parse(localStorage.getItem('database')) || "";
 var stores = [newStores];
 
-    var scorePerCent = Math.round(100 * score/currentQuestion.length);
+    var scorePerCent = Math.round(100 * score/currentQuestion.length) + '%';
     
 
     var saveUserScore = user.value;
@@ -157,9 +152,19 @@ var stores = [newStores];
         if (localStorage.getItem("database") == null) {
             document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
         } else {
+            
             document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"));
+
+            
         }
+
+
+        
+
     }
+
+
+
 };
 
 // function readStatus() {

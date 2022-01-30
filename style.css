@@ -93,7 +93,7 @@ body{
     border-radius: 25px;
 }
 
-#write{
+#writeUserNameAndScore{
     margin-top: 10px;
     visibility: visible;
     width: 500px;
