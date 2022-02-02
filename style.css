@@ -93,7 +93,7 @@ body{
     border-radius: 25px;
 }
 
-#writeUserNameAndScore{
+/* #writeUserNameAndScore{
     margin-top: 10px;
     visibility: visible;
     width: 500px;
@@ -104,4 +104,4 @@ body{
     font-weight: bold;
     border:black solid 10px;
     border-radius: 25px;
-}
+} */
