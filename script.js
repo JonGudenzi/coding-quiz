@@ -108,7 +108,10 @@ function scoreRender() {
 if (localStorage.getItem("database") == null) {
     document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
 } else {
-    document.getElementById('writeUserNameAndScore').innerHTML = JSON.parse(localStorage.getItem("database"));
+stores.forEach(function(val){
+    document.getElementById("writeUserNameAndScore").innerHTML = (val.user + " " + val.score);
+});
+
 
 }
 
@@ -116,7 +119,6 @@ if (localStorage.getItem("database") == null) {
 
 function saveUserScore() {
     
-
   var scorePerCent = Math.round((100 * score) / currentQuestion.length) + "%";
   
   var saveUserScore = user.value;
@@ -139,13 +141,6 @@ else
       //print value in local storage
       localStorage.setItem("database", JSON.stringify(stores));
 
-      //confirm write
-    //   document.getElementById("writeUserNameAndScore").innerHTML = stores;
-
-      
-        // document.getElementById("writeUserNameAndScore").innerHTML = JSON.parse(
-        //   localStorage.getItem("database")
-        // );
         listData ();
         $('input').remove();
         $('#saveScore').remove();
@@ -168,4 +163,5 @@ stores.forEach(function(val){
 dataBaseEl.insertAfter($('#writeUserNameAndScore'));
   }
 }
+
 
