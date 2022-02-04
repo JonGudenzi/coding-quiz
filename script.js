@@ -108,9 +108,9 @@ function scoreRender() {
 if (localStorage.getItem("database") == null) {
     document.getElementById('writeUserNameAndScore').innerHTML = "nothing stored.";
 } else {
-stores.forEach(function(val){
-    document.getElementById("writeUserNameAndScore").innerHTML = (val.user + " " + val.score);
-});
+    var data = localStorage.getItem("database");
+data     = JSON.parse(data);
+    document.getElementById('writeUserNameAndScore').innerHTML = (localStorage.getItem("database"));
 
 
 }
@@ -144,7 +144,15 @@ else
         listData ();
         $('input').remove();
         $('#saveScore').remove();
-      
+
+        stores.forEach(function(val){
+            var prevList = $('<ul></ul>');
+            // document.getElementById("writeUserNameAndScore").innerHTML = (val.user + " " + val.score);
+            prevList.append('<li>' + val.user + ' ' + val.score +'</li>');
+            
+        
+        });
+       
     }
     
   };
@@ -161,7 +169,9 @@ stores.forEach(function(val){
     dataBaseEl.append('<li>' + val.user + ' ' + val.score +'</li>');
 });
 dataBaseEl.insertAfter($('#writeUserNameAndScore'));
+
   }
 }
+
 
 
